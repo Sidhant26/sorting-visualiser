@@ -1,11 +1,11 @@
+import React from 'react';
 import './App.css';
+import Visualiser from './components/Visualiser';
 
-function App() {
+export default function App() {
   return (
     <div>
-      
+      <Visualiser></Visualiser>
     </div>
   );
 }
-
-export default App;
