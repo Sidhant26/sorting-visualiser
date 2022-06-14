@@ -1,4 +1,4 @@
-export const bubbleSort= arr =>{
+export const bubbleSort = arr =>{
     for(let i=0;i<arr.length;i++)
     {
         for(let j=0;j<arr.length-i-1;j++)
@@ -9,4 +9,9 @@ export const bubbleSort= arr =>{
           }
         }
       }
+      return arr
+}
+
+export const selectionSort = arr =>{
+  
 }
