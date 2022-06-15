@@ -1,27 +1,3 @@
-export const bubbleSort = (arr,colourInt,arrInt) =>{
-  let clr=colourInt[colourInt.length-1].slice()
-    for(let i=0;i<arr.length;i++)
-    {
-        for(let j=0;j<arr.length-i-1;j++)
-        {
-          if(arr[j]>arr[j+1])
-          {
-            [arr[j],arr[j+1]]=[arr[j+1],arr[j]]
-          }
-          arrInt.push(arr.slice())
-          clr[j]=1
-          clr[j+1]=1
-          colourInt.push(clr.slice())
-          clr[j]=0
-          clr[j+1]=0
-        }
-        clr[arrInt.length-1-i]=2
-        arrInt.push(arr.slice())
-        colourInt.push(clr.slice()) 
-      }
-      colourInt[colourInt.length-1]=new Array(arr.length).fill(2)
-}
-
 function merge(arr,l,h,animations,temp)
 {
   const mid=Math.floor((l+h)/2)
@@ -59,7 +35,7 @@ function merge(arr,l,h,animations,temp)
 
 function mergeSort(arr,l,h,temp,animations)
 {
-  if(l==h)
+  if(l===h)
   return
   const mid=Math.floor((l+h)/2)
   mergeSort(temp,l,mid,arr,animations)

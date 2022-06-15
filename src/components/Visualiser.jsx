@@ -2,7 +2,7 @@ import React from "react";
 import "./Visualiser.css"
 import * as algo from "../Algorithms"
 
-const primary="aqua",sec="red",animSpeed=1
+const primary="darkgreen",sec="red",animSpeed=4
 
 export default function Visualiser()
 {
@@ -11,7 +11,7 @@ export default function Visualiser()
     {
         const a=[]
         for(let i=0;i<280;i++)
-        a.push(generateRandom(5,732))
+        a.push(generateRandom(5,720))
         setArr(a)
     }
 
@@ -23,12 +23,6 @@ export default function Visualiser()
     React.useEffect(()=>{
         getArray();
     },[0])
-
-    function bubbleSort()
-    {
-        algo.bubbleSort(arr)
-        console.log(arr)
-    }
 
     function mergeSort()
     {
@@ -59,12 +53,73 @@ export default function Visualiser()
         }
     }
 
+    function bubbleSort()
+    {
+        const arrayBar=document.getElementsByClassName('arr-viz');
+        for(let j=0;j<arr.length;j++)
+        {
+            for(let i=0;i<arr.length-1;i++)
+            {
+                const barOneStyle = arrayBar.item(i).style;
+                const barTwoStyle=arrayBar.item(i+1).style;
+                async function fin()
+                {
+                    const promise=new Promise((accept)=>{
+                        setTimeout(()=>{
+                                barOneStyle.backgroundColor="darkgreen";
+                                barTwoStyle.backgroundColor="darkgreen";
+                                accept();
+                            },i*animSpeed)
+                        })
+                    await promise;
+                }
+                fin();
+                const colorChange=(arr[i]>=arr[i+1])?"red":"aqua";
+                if(arr[i]>arr[i+1])
+                {
+                    async function foo(){
+                        const promise=new Promise((accept)=>{
+                            setTimeout(()=>{
+                                barOneStyle.backgroundColor=colorChange;
+                                barTwoStyle.backgroundColor=colorChange;
+                                const h1=barOneStyle.height;
+                                const h2=barTwoStyle.height;
+                                barTwoStyle.height=`${h1}`;
+                                barOneStyle.height=`${h2}`;
+                                accept();    
+                            },2)
+                        })
+                        await promise;
+                    }
+                     foo();
+                    const a=arr[i],b=arr[i+1];
+                    arr[i]=b;
+                    arr[i+1]=a;   
+                }
+            async function doThing(){
+                const promise=new Promise((accept)=>{
+                    setTimeout(()=>{
+                        barOneStyle.backgroundColor="aqua";
+                        barTwoStyle.backgroundColor="aqua";
+                        accept();
+                    },1)
+                })
+                await promise;
+            }
+            doThing();           
+            }
+        }
+    }
+
     return(
         <>
-            <button onClick={getArray} className="btn"> Get a new array</button>
-            <button onClick={mergeSort} className="btn">ms</button>
+            <div className="btns">
+                <button onClick={getArray} className="btn"> Get a new array</button>
+                <button onClick={mergeSort} className="btn"> Merge sort</button>
+                <button onClick={bubbleSort} className="btn"> Bubble sort</button>
+            </div>
             <br /><br />
-            <div className="arr-flex">
+            <div className="arr-cont">
                 {arr.map((value,ind)=>(
                     <div className="arr-viz" key={ind} 
                     style={{height:`${value}px`, width: `${arr.length<50 ? 8 : 2}px` }}>

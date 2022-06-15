@@ -1,11 +1,10 @@
 .arr-viz{
-    width: 3px;
     background-color: aqua;
     display: inline-block;
     margin: 1.5px;
 }
 
-.arr-flex{
+.arr-cont{
     position: absolute;
     left: 100px;
 }
@@ -20,4 +19,9 @@
     display: inline-block;
     border: none;
     margin: 0 20px;
+}
+
+.btns{
+    display: flex;
+    justify-content: space-around;
 }
