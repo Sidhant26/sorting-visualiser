@@ -52,3 +52,42 @@ export function mergeAnimations(arr)
   mergeSort(arr,0,arr.length-1,temp,animations)
   return animations
 }
+
+function partition(arr=[],l,r,animations=[])
+{
+
+  const pivot=arr[Math.floor((l+r)/2)]
+  const i=l
+  const j=r
+  while(i<=j)
+  {
+      while(arr[i]<pivot)
+      i++
+      while(arr[j]>pivot)
+      j--;
+      if(i<=j)
+      {
+        [i,j]=[j,i]
+        animations.push([i,j,arr[i],arr[j]]);
+        animations.push([i,j,arr[i],arr[j]]);
+        animations.push([i,j,arr[i],arr[j]]);
+        i++;
+        j--;
+      }
+  }
+  return i;
+}
+
+export function quickSort(arr=[],l,r,animations=[])
+{
+  let temp
+  if (arr.length > 1)
+  {
+      temp=partition(arr, l, r, animations)
+      if(l<temp-1)
+      quickSort(arr,l,temp-1,animations)    
+      if (temp < r)
+      quickSort(arr, temp, r, animations)
+  }
+  return arr
+}

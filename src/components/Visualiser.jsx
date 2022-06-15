@@ -111,6 +111,11 @@ export default function Visualiser()
         }
     }
 
+    function quickSort()
+    {
+        
+    }
+
     return(
         <>
             <div className="btns">
