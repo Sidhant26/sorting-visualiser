@@ -53,6 +53,7 @@ export function mergeAnimations(arr)
   return animations
 }
 
+
 function partition(arr=[],l,r,animations=[])
 {
 
@@ -78,16 +79,24 @@ function partition(arr=[],l,r,animations=[])
   return i;
 }
 
-export function quickSort(arr=[],l,r,animations=[])
+function quickSort(arr=[],l,r,animations=[])
 {
   let temp
-  if (arr.length > 1)
+  if(arr.length>1)
   {
-      temp=partition(arr, l, r, animations)
+      temp=partition(arr,l,r,animations)
       if(l<temp-1)
       quickSort(arr,l,temp-1,animations)    
-      if (temp < r)
-      quickSort(arr, temp, r, animations)
+      if (temp<r)
+      quickSort(arr,temp,r,animations)
   }
+}
+
+export function quickAnimations(arr)
+{
+  const animations=[]
+  if(arr.length<=1)
   return arr
+  quickSort(arr,0,arr.length-1,animations)
+  return animations  
 }
