@@ -58,8 +58,8 @@ function partition(arr=[],l,r,animations=[])
 {
 
   const pivot=arr[Math.floor((l+r)/2)]
-  const i=l
-  const j=r
+  let i=l
+  let j=r
   while(i<=j)
   {
       while(arr[i]<pivot)

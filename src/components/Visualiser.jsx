@@ -1,6 +1,7 @@
 import React from "react"
 import "./Visualiser.css"
 import * as algo from "../Algorithms"
+import {Button} from 'react-bootstrap'
 
 const primary="darkgreen",sec="red",animSpeed=4
 
@@ -116,9 +117,9 @@ export default function Visualiser()
     return(
         <>
             <div className="btns">
-                <button onClick={getArray} className="btn"> Get a new array</button>
-                <button onClick={mergeSort} className="btn"> Merge sort</button>
-                <button onClick={bubbleSort} className="btn"> Bubble sort</button>
+                <Button variant="primary" className="btn-primary" onClick={getArray}>  Get a new array</Button>
+                <Button variant="primary" className="btn-primary" onClick={mergeSort}> Merge sort</Button>
+                <Button variant="primary" className="btn-primary" onClick={bubbleSort}> Bubble sort</Button>
             </div>
             <br /><br />
             <div className="arr-cont">
