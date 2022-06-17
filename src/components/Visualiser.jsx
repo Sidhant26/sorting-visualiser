@@ -1,8 +1,7 @@
 import React from "react"
 import "./Visualiser.css"
-import * as algo from "../Algorithms"
-import {Button,DropdownButton} from 'react-bootstrap' 
-import { Dropdown } from "react-bootstrap"
+import*as algo from "../Algorithms"
+import {Button,DropdownButton,Dropdown} from 'react-bootstrap' 
 
 const primary="darkgreen",sec="red",animSpeed=4
 
@@ -20,7 +19,7 @@ export default function Visualiser()
 
     function generateRandom(min,max) 
     {
-        return Math.floor(Math.random() * (max - min + 1)) + min
+        return Math.floor(Math.random()*(max - min + 1)) + min
     }
 
     React.useEffect(()=>{
@@ -63,14 +62,14 @@ export default function Visualiser()
         {
             for(let i=0;i<arr.length-1;i++)
             {
-                const barOneStyle=arrayBar.item(i).style
-                const barTwoStyle=arrayBar.item(i+1).style
+                const firstBar=arrayBar.item(i).style
+                const secondBar=arrayBar.item(i+1).style
                 async function fin()
                 {
                     const promise=new Promise((accept)=>{
                         setTimeout(()=>{
-                                barOneStyle.backgroundColor="darkgreen"
-                                barTwoStyle.backgroundColor="darkgreen"
+                                firstBar.backgroundColor="darkgreen"
+                                secondBar.backgroundColor="darkgreen"
                                 accept()
                             },i*animSpeed)
                         })
@@ -83,12 +82,12 @@ export default function Visualiser()
                     async function foo(){
                         const promise=new Promise((accept)=>{
                             setTimeout(()=>{
-                                barOneStyle.backgroundColor=colorChange
-                                barTwoStyle.backgroundColor=colorChange
-                                const h1=barOneStyle.height
-                                const h2=barTwoStyle.height
-                                barTwoStyle.height=`${h1}`
-                                barOneStyle.height=`${h2}`
+                                firstBar.backgroundColor=colorChange
+                                secondBar.backgroundColor=colorChange
+                                const h1=firstBar.height
+                                const h2=secondBar.height
+                                secondBar.height=`${h1}`
+                                firstBar.height=`${h2}`
                                 accept()    
                             },2)
                         })
@@ -102,8 +101,8 @@ export default function Visualiser()
             async function doThing(){
                 const promise=new Promise((accept)=>{
                     setTimeout(()=>{
-                        barOneStyle.backgroundColor="aqua"
-                        barTwoStyle.backgroundColor="aqua"
+                        firstBar.backgroundColor="aqua"
+                        secondBar.backgroundColor="aqua"
                         accept()
                     },1)
                 })
@@ -114,12 +113,67 @@ export default function Visualiser()
         }
     }
 
+    function selectionSort()
+    {
+        const animations=algo.selectionSortAnimation(arr)
+        for(let i=0;i<animations.length;i++)
+        {
+            const arrayBars=document.getElementsByClassName("arr-viz")
+            const [type,firstInd,secondInd]=animations[i]
+            const firstBar=arrayBars[firstInd].style
+            const secondBar=arrayBars[secondInd].style
+            if(type===0)
+            {
+                setTimeout(()=>{
+                    firstBar.backgroundColor="aqua"
+                    secondBar.backgroundColor="red"
+                },i*animSpeed)
+            }
+            else if(type===1)
+            {
+                setTimeout(()=>{
+                    firstBar.backgroundColor="aqua"
+                    secondBar.backgroundColor="red"
+                },i*animSpeed)
+            }
+            else if(type===2)
+            {
+                setTimeout(()=>{
+                    firstBar.backgroundColor="red"
+                    secondBar.backgroundColor="red"
+                    let temp=firstBar.height
+                    firstBar.height=secondBar.height
+                    secondBar.height=temp
+                },i*animSpeed)
+            }
+            else if(type===3)
+            {
+                setTimeout(()=>{
+                    secondBar.backgroundColor="red"
+                },i*animSpeed)
+            }
+            else if(type===4)
+            {
+                for(let j=0;j<arrayBars.length;j++)
+                {
+                    setTimeout(()=>{
+                        arrayBars[j].style.backgroundColor="darkgreen"
+                    },i*animSpeed)
+                    setTimeout(()=>{
+                        arrayBars[j].style.backgroundColor="darkgreen"
+                    },i*animSpeed)
+                }
+            }
+        }
+    }
+
     return(
         <>
             <div className="btns">
                 <Button variant="primary" className="btn-primary" onClick={getArray}>  Get a new array</Button>
                 <Button variant="primary" className="btn-primary" onClick={mergeSort}> Merge sort</Button>
                 <Button variant="primary" className="btn-primary" onClick={bubbleSort}> Bubble sort</Button>
+                <Button variant="primary" className="btn-primary" onClick={selectionSort}> Selection sort</Button>
                 <DropdownButton id="length" title="Size">
                     <Dropdown.Item eventKey="1" onClick={()=>setLen(20)}>20</Dropdown.Item>
                     <Dropdown.Item eventKey="2" onClick={()=>setLen(50)}>50</Dropdown.Item>
@@ -129,6 +183,7 @@ export default function Visualiser()
                     <Dropdown.Item eventKey="6" onClick={()=>setLen(280)}>280</Dropdown.Item>
                 </DropdownButton>
             </div>
+            <br />
             <div className="arr-cont">
                 {arr.map((value,ind)=>(
                     <div className="arr-viz" key={ind} 

@@ -69,9 +69,9 @@ function partition(arr=[],l,r,animations=[])
       if(i<=j)
       {
         [i,j]=[j,i]
-        animations.push([i,j,arr[i],arr[j]]);
-        animations.push([i,j,arr[i],arr[j]]);
-        animations.push([i,j,arr[i],arr[j]]);
+        animations.push([i,j,arr[i],arr[j]])
+        animations.push([i,j,arr[i],arr[j]])
+        animations.push([i,j,arr[i],arr[j]])
         i++;
         j--;
       }
@@ -99,4 +99,36 @@ export function quickAnimations(arr)
   return arr
   quickSort(arr,0,arr.length-1,animations)
   return animations  
+}
+
+export function selectionSortAnimation(arr)
+{
+  const animations=[]
+  for(let j=0;j<arr.length-1;j++)
+  {
+    let min=j
+    for (let i=j+1;i<arr.length;i++)
+    {
+      animations.push([0,i,min])
+      animations.push([1,i,min])
+      if (arr[i]<=arr[min])
+      min=i
+    }
+    if(min!==j)
+    {
+      animations.push([2,min,j])
+      animations.push([3,min,j])
+      swap(arr,j,min)
+    }
+    else
+    animations.push([3,min,j])
+  }
+  animations.push([4,0,0])
+  return animations
+}
+
+function swap(array, a, b) {
+  let temp = array[a];
+  array[a] = array[b];
+  array[b] = temp;
 }
