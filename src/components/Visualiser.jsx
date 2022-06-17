@@ -1,17 +1,19 @@
 import React from "react"
 import "./Visualiser.css"
 import * as algo from "../Algorithms"
-import {Button} from 'react-bootstrap'
+import {Button,DropdownButton} from 'react-bootstrap' 
+import { Dropdown } from "react-bootstrap"
 
 const primary="darkgreen",sec="red",animSpeed=4
 
 export default function Visualiser()
 {
     const [arr,setArr]=React.useState([])
+    const [len,setLen]=React.useState(20)
     function getArray()
     {
         const a=[]
-        for(let i=0;i<280;i++)
+        for(let i=0;i<len;i++)
         a.push(generateRandom(5,720))
         setArr(a)
     }
@@ -23,7 +25,7 @@ export default function Visualiser()
 
     React.useEffect(()=>{
         getArray()
-    },[0])
+    },[len])
 
     function mergeSort()
     {
@@ -112,20 +114,25 @@ export default function Visualiser()
         }
     }
 
-    
-
     return(
         <>
             <div className="btns">
                 <Button variant="primary" className="btn-primary" onClick={getArray}>  Get a new array</Button>
                 <Button variant="primary" className="btn-primary" onClick={mergeSort}> Merge sort</Button>
                 <Button variant="primary" className="btn-primary" onClick={bubbleSort}> Bubble sort</Button>
+                <DropdownButton id="length" title="Size">
+                    <Dropdown.Item eventKey="1" onClick={()=>setLen(20)}>20</Dropdown.Item>
+                    <Dropdown.Item eventKey="2" onClick={()=>setLen(50)}>50</Dropdown.Item>
+                    <Dropdown.Item eventKey="3" onClick={()=>setLen(100)}>100</Dropdown.Item>
+                    <Dropdown.Item eventKey="4" onClick={()=>setLen(150)}>150</Dropdown.Item>
+                    <Dropdown.Item eventKey="5" onClick={()=>setLen(200)}>200</Dropdown.Item>
+                    <Dropdown.Item eventKey="6" onClick={()=>setLen(280)}>280</Dropdown.Item>
+                </DropdownButton>
             </div>
-            <br /><br />
             <div className="arr-cont">
                 {arr.map((value,ind)=>(
                     <div className="arr-viz" key={ind} 
-                    style={{height:`${value}px`,width: `${arr.length<50 ? 8 : 2}px` }}>
+                    style={{height:`${value}px`,width: `${arr.length<=100 ? 11 : 2}px` }}>
                     </div>
                 ))}
             </div>
