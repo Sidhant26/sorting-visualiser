@@ -89,7 +89,7 @@ export default function Visualiser()
                                 secondBar.height=`${h1}`
                                 firstBar.height=`${h2}`
                                 accept()    
-                            },2)
+                            },animSpeed)
                         })
                         await promise
                     }
@@ -167,13 +167,62 @@ export default function Visualiser()
         }
     }
 
+    function quickSort()
+    {
+        const animations=algo.quickAnimations(arr)
+        for (let i=0;i< animations.length;i++)
+        {
+            const arrayBars=document.getElementsByClassName("arr-viz");
+            const [type,firstInd,secondInd]=animations[i];
+            const firstBar=arrayBars[firstInd].style;
+            const secondBar=arrayBars[secondInd].style;
+            if(type===0)
+            {
+                setTimeout(()=>{
+                    firstBar.backgroundColor="aqua"
+                    secondBar.backgroundColor="red"
+                },i*animSpeed)
+            }
+            else if(type===1)
+            {
+                setTimeout(()=>{
+                    firstBar.backgroundColor="aqua"
+                    secondBar.backgroundColor="red"
+                },i*animSpeed)
+            }
+            else if(type===2)
+            {
+                setTimeout(()=>{
+                    firstBar.backgroundColor="darkgreen"
+                    secondBar.backgroundColor="darkgreen"
+                    let temp=firstBar.height
+                    firstBar.height=secondBar.height
+                    secondBar.height=temp
+                },i*animSpeed)
+            }
+            else if(type===4)
+            {
+                for (let j=0;j<arrayBars.length;j++)
+                {
+                    setTimeout(()=>{
+                        arrayBars[j].style.backgroundColor="aqua"
+                    },i*animSpeed)
+                    setTimeout(()=>{
+                        arrayBars[j].style.backgroundColor="darkgreen"
+                    },i*animSpeed)
+                }
+            }
+        }
+    }
+
     return(
         <>
             <div className="btns">
                 <Button variant="primary" className="btn-primary" onClick={getArray}>  Get a new array</Button>
                 <Button variant="primary" className="btn-primary" onClick={mergeSort}> Merge sort</Button>
-                <Button variant="primary" className="btn-primary" onClick={bubbleSort}> Bubble sort</Button>
+                <Button variant="primary" className="btn-primary" onClick={quickSort}> Quick sort</Button>
                 <Button variant="primary" className="btn-primary" onClick={selectionSort}> Selection sort</Button>
+                <Button variant="primary" className="btn-primary" onClick={bubbleSort}> Bubble sort</Button>
                 <DropdownButton id="length" title="Size">
                     <Dropdown.Item eventKey="1" onClick={()=>setLen(20)}>20</Dropdown.Item>
                     <Dropdown.Item eventKey="2" onClick={()=>setLen(50)}>50</Dropdown.Item>

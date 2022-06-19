@@ -53,51 +53,42 @@ export function mergeAnimations(arr)
   return animations
 }
 
-
-function partition(arr=[],l,r,animations=[])
+function partition(arr,l,r,animations)
 {
-
-  const pivot=arr[Math.floor((l+r)/2)]
-  let i=l
-  let j=r
-  while(i<=j)
+  let pivotIndex=l
+  let pivotValue=arr[r]
+  for (let i=l;i<r;i++)
   {
-      while(arr[i]<pivot)
-      i++
-      while(arr[j]>pivot)
-      j--;
-      if(i<=j)
-      {
-        [i,j]=[j,i]
-        animations.push([i,j,arr[i],arr[j]])
-        animations.push([i,j,arr[i],arr[j]])
-        animations.push([i,j,arr[i],arr[j]])
-        i++;
-        j--;
-      }
+    animations.push([0,i, pivotIndex])
+    if (arr[i]<pivotValue)
+    {
+      swap(arr,i,pivotIndex)
+      animations.push([2,i,pivotIndex])
+      animations.push([1,i,pivotIndex])
+      pivotIndex++
+    }
+    animations.push([1, i, pivotIndex])
   }
-  return i;
+  swap(arr,pivotIndex,r)
+  animations.push([2,pivotIndex,r])
+  animations.push([1,pivotIndex,r])
+  return pivotIndex
 }
 
-function quickSort(arr=[],l,r,animations=[])
+function quickSort(arr,l,r,animations)
 {
-  let temp
-  if(arr.length>1)
-  {
-      temp=partition(arr,l,r,animations)
-      if(l<temp-1)
-      quickSort(arr,l,temp-1,animations)    
-      if (temp<r)
-      quickSort(arr,temp,r,animations)
-  }
+  if(l>=r)
+  return
+  let i=partition(arr,l,r,animations)
+  quickSort(arr,l,i-1,animations)
+  quickSort(arr,i+1,r,animations)
 }
 
 export function quickAnimations(arr)
 {
   const animations=[]
-  if(arr.length<=1)
-  return arr
   quickSort(arr,0,arr.length-1,animations)
+  animations.push([4,0,0])
   return animations  
 }
 
@@ -127,8 +118,8 @@ export function selectionSortAnimation(arr)
   return animations
 }
 
-function swap(array, a, b) {
-  let temp = array[a];
-  array[a] = array[b];
-  array[b] = temp;
+function swap(arr,a,b) {
+  let temp=arr[a];
+  arr[a]=arr[b];
+  arr[b]=temp;
 }
